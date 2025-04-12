@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Doctors - Your Personal Health Companion</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #2a9d8f;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --danger: #e76f51;
+            --success: #2a9d8f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #21867a;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        /* Authentication Forms */
+        .auth-container {
+            max-width: 500px;
+            margin: 3rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .auth-container h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        /* Dashboard Styles */
+        .dashboard {
+            padding: 2rem 0;
+        }
+        
+        .welcome-banner {
+            background: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .welcome-banner h2 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quick-action {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quick-action:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .quick-action i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Health Tools */
+        .health-tools {
+            margin-top: 3rem;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tool-card h3 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+        
+        /* Chatbot Styles */
+        .chat-container {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+        
+        .user-message {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .bot-message {
+            background: white;
+            border: 1px solid #ddd;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+        
+        .chat-input button {
+            padding: 0 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        /* Doctor Recommendations */
+        .doctor-list {
+            margin-top: 2rem;
+        }
+        
+        .doctor-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .doctor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #eee;
+            margin-right: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .doctor-info {
+            flex: 1;
+        }
+        
+        .doctor-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .doctor-specialty {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .doctor-distance {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .doctor-actions {
+            margin-left: 1rem;
+        }
+        
+        /* Review Styles */
+        .review-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .review-user {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #eee;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .review-info h4 {
+            margin-bottom: 0.2rem;
+        }
+        
+        .review-rating {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .review-date {
+            color: #999;
+            font-size: 0.8rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+            }
+            
+            .nav-links li {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .doctor-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .doctor-avatar {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Hello <span>Doctors</span></a>
+                <ul class="nav-links" id="navLinks">
+                    <!-- Dynamically populated based on auth state -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Content will be dynamically loaded here -->
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--secondary); color: white; padding: 2rem 0; text-align: center; margin-top: 3rem;">
+        <div class="container">
+            <p>&copy; 2023 Hello Doctors. All rights reserved.</p>
+            <div style="margin-top: 1rem;">
+                <a href="#" style="color: white; margin: 0 10px;"><i class="fab fa-facebook"></i></a>
+                <a href="#" style="color: white; margin: 0 10px;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: white; margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Database Simulation
+        const db = {
+            users: [
+                {
+                    id: 1,
+                    email: "user@example.com",
+                    password: "password123",
+                    name: "John Doe",
+                    medicalHistory: [],
+                    menstrualData: [],
+                    appointments: []
+                }
+            ],
+            doctors: [
+                {
+                    id: 1,
+                    name: "Dr. Sarah Smith",
+                    specialty: "Cardiologist",
+                    location: {
+                        address: "123 Medical Center Dr",
+                        city: "New York",
+                        coordinates: [40.7128, -74.0060]
+                    },
+                    rating: 4.8,
+                    reviews: [
+                        {
+                            userId: 1,
+                            rating: 5,
+                            comment: "Excellent doctor! Very knowledgeable and caring.",
+                            date: "2023-05-15"
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "Dr. Michael Johnson",
+                    specialty: "Neurologist",
+                    location: {
+                        address: "456 Health Ave",
+                        city: "Boston",
+                        coordinates: [42.3601, -71.0589]
+                    },
+                    rating: 4.5,
+                    reviews: []
+                }
+            ],
+            medications: [
+                { name: "Ibuprofen", condition: "Pain relief", dosage: "200-400mg every 4-6 hours" },
+                { name: "Paracetamol", condition: "Fever", dosage: "500mg every 6 hours" }
+            ]
+        };
+
+        // App State
+        let currentUser = null;
+        let currentPage = 'home';
+
+        // DOM Elements
+        const mainContent = document.getElementById('mainContent');
+        const navLinks = document.getElementById('navLinks');
+
+        // Initialize the app
+        function init() {
+            checkAuthState();
+            renderPage();
+        }
+
+        // Check authentication state
+        function checkAuthState() {
+            const user = localStorage.getItem('currentUser');
+            if (user) {
+                currentUser = JSON.parse(user);
+                renderNav(true);
+            } else {
+                renderNav(false);
+            }
+        }
+
+        // Render navigation based on auth state
+        function renderNav(isAuthenticated) {
+            navLinks.innerHTML = '';
+            
+            if (isAuthenticated) {
+                navLinks.innerHTML = `
+                    <li><a href="#" onclick="navigate('home')">Home</a></li>
+                    <li><a href="#" onclick="navigate('services')">Services</a></li>
+                    <li><a href="#" onclick="navigate('appointments')">Appointments</a></li>
+                    <li><a href="#" onclick="navigate('reviews')">Reviews</a></li>
+                    <li><button class="btn btn-outline" onclick="logout()">Logout</button></li>
+                `;
+            } else {
+                navLinks.innerHTML = `
+                    <li><a href="#" onclick="navigate('home')">Home</a></li>
+                    <li><a href="#" onclick="navigate('services')">Services</a></li>
+                    <li><a href="#" onclick="navigate('about')">About</a></li>
+                    <li><a href="#" onclick="navigate('login')">Login</a></li>
+                    <li><a href="#" class="btn" onclick="navigate('signup')">Sign Up</a></li>
+                `;
+            }
+        }
+
+        // Navigation function
+        function navigate(page) {
+            currentPage = page;
+            renderPage();
+            window.scrollTo(0, 0);
+        }
+
+        // Render the current page
+        function renderPage() {
+            switch (currentPage) {
+                case 'home':
+                    renderHomePage();
+                    break;
+                case 'login':
+                    renderLoginPage();
+                    break;
+                case 'signup':
+                    renderSignupPage();
+                    break;
+                case 'services':
+                    renderServicesPage();
+                    break;
+                case 'about':
+                    renderAboutPage();
+                    break;
+                case 'dashboard':
+                    renderDashboard();
+                    break;
+                case 'analyzer':
+                    renderAnalyzer();
+                    break;
+                case 'chatbot':
+                    renderChatbot();
+                    break;
+                case 'menses':
+                    renderMensesTracker();
+                    break;
+                case 'appointments':
+                    renderAppointments();
+                    break;
+                case 'reviews':
+                    renderReviews();
+                    break;
+                default:
+                    renderHomePage();
+            }
+        }
+
+        // Page Rendering Functions
+        function renderHomePage() {
+            if (currentUser) {
+                renderDashboard();
+                return;
+            }
+            
+            mainContent.innerHTML = `
+                <section class="hero">
+                    <div class="container">
+                        <h1>Your Personal Health Companion</h1>
+                        <p>Hello Doctors connects you with healthcare professionals and provides smart tools to manage your health anytime, anywhere.</p>
+                        <div style="display: flex; gap: 1rem; justify-content: center;">
+                            <a href="#" class="btn" onclick="navigate('signup')">Get Started</a>
+                            <a href="#" class="btn btn-outline" onclick="navigate('services')">Learn More</a>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="features">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Why Choose Hello Doctors?</h2>
+                            <p>Our platform offers comprehensive healthcare solutions tailored to your needs</p>
+                        </div>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-stethoscope"></i>
+                                </div>
+                                <h3>Smart Health Analyzer</h3>
+                                <p>Upload your medical documents and get instant analysis with treatment recommendations.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <h3>AI Health Assistant</h3>
+                                <p>Chat with our intelligent assistant to get personalized health advice and doctor recommendations.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <h3>Menstrual Tracker</h3>
+                                <p>Track your menstrual cycle and receive personalized suggestions for better cycle management.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderLoginPage() {
+            mainContent.innerHTML = `
+                <div class="auth-container">
+                    <h2>Login to Hello Doctors</h2>
+                    <form id="loginForm" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn" style="width: 100%;">Login</button>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <p>Don't have an account? <a href="#" onclick="navigate('signup')">Sign Up</a></p>
+                            <p><a href="#" onclick="alert('Password reset link sent to your email')">Forgot Password?</a></p>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function renderSignupPage() {
+            mainContent.innerHTML = `
+                <div class="auth-container">
+                    <h2>Create Your Account</h2>
+                    <form id="signupForm" onsubmit="handleSignup(event)">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupEmail">Email</label>
+                            <input type="email" id="signupEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" required minlength="6">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupConfirm">Confirm Password</label>
+                            <input type="password" id="signupConfirm" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn" style="width: 100%;">Create Account</button>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <p>Already have an account? <a href="#" onclick="navigate('login')">Login</a></p>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function renderDashboard() {
+            mainContent.innerHTML = `
+                <section class="dashboard">
+                    <div class="container">
+                        <div class="welcome-banner">
+                            <h2>Welcome back, ${currentUser?.name || 'User'}!</h2>
+                            <p>How can we help you today?</p>
+                        </div>
+                        
+                        <div class="quick-actions">
+                            <div class="quick-action" onclick="navigate('analyzer')">
+                                <i class="fas fa-upload"></i>
+                                <h3>Health Analyzer</h3>
+                                <p>Upload medical documents</p>
+                            </div>
+                            
+                            <div class="quick-action" onclick="navigate('chatbot')">
+                                <i class="fas fa-comment-medical"></i>
+                                <h3>Health Assistant</h3>
+                                <p>Chat with our AI</p>
+                            </div>
+                            
+                            <div class="quick-action" onclick="navigate('menses')">
+                                <i class="fas fa-calendar-check"></i>
+                                <h3>Cycle Tracker</h3>
+                                <p>Track menstrual health</p>
+                            </div>
+                            
+                            <div class="quick-action" onclick="navigate('appointments')">
+                                <i class="fas fa-calendar-plus"></i>
+                                <h3>Appointments</h3>
+                                <p>Book with doctors</p>
+                            </div>
+                        </div>
+                        
+                        <div class="health-tools">
+                            <h2 class="section-title">Your Health Tools</h2>
+                            
+                            <div class="tool-card">
+                                <h3><i class="fas fa-heartbeat"></i> Health Analyzer</h3>
+                                <p>Upload your medical documents (reports, scans, prescriptions) and get instant analysis with treatment recommendations.</p>
+                                <button class="btn" onclick="navigate('analyzer')">Try Analyzer</button>
+                            </div>
+                            
+                            <div class="tool-card">
+                                <h3><i class="fas fa-robot"></i> AI Health Assistant</h3>
+                                <p>Describe your symptoms and our intelligent assistant will provide guidance and recommend nearby specialists.</p>
+                                <button class="btn" onclick="navigate('chatbot')">Chat Now</button>
+                            </div>
+                            
+                            <div class="tool-card">
+                                <h3><i class="fas fa-female"></i> Menstrual Tracker</h3>
+                                <p>Track your cycle, symptoms, and moods to get personalized health recommendations.</p>
+                                <button class="btn" onclick="navigate('menses')">Track Cycle</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderAnalyzer() {
+            mainContent.innerHTML = `
+                <section class="dashboard">
+                    <div class="container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h2>Health Analyzer</h2>
+                            <button class="btn btn-outline" onclick="navigate('dashboard')"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <h3><i class="fas fa-upload"></i> Upload Medical Documents</h3>
+                            <p>Upload your medical reports, scans, or prescription images for analysis. Our system will identify potential health issues and suggest appropriate treatments.</p>
+                            
+                            <div style="border: 2px dashed #ddd; padding: 2rem; text-align: center; margin: 2rem 0; border-radius: 10px;">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                                <p>Drag and drop files here or</p>
+                                <input type="file" id="medicalUpload" accept="image/*,.pdf" style="display: none;">
+                                <button class="btn" onclick="document.getElementById('medicalUpload').click()">Select Files</button>
+                                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">Supported formats: JPG, PNG, PDF (max 10MB)</p>
+                            </div>
+                            
+                            <div id="analysisResults" style="display: none;">
+                                <h3 style="margin-top: 2rem;">Analysis Results</h3>
+                                <div id="resultsContent" style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-card" style="margin-top: 2rem;">
+                            <h3><i class="fas fa-history"></i> Analysis History</h3>
+                            <div id="analysisHistory">
+                                ${currentUser?.medicalHistory?.length ? 
+                                    currentUser.medicalHistory.map(record => `
+                                        <div style="padding: 1rem; border-bottom: 1px solid #eee;">
+                                            <p><strong>${record.date}</strong> - ${record.condition}</p>
+                                            <p>Treatment: ${record.treatment}</p>
+                                        </div>
+                                    `).join('') : 
+                                    '<p>No previous analysis records found.</p>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+            
+            // Add event listener for file upload
+            document.getElementById('medicalUpload').addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    analyzeDocuments(e.target.files[0]);
+                }
+            });
+        }
+
+        function analyzeDocuments(file) {
+            // Show loading state
+            const resultsDiv = document.getElementById('analysisResults');
+            resultsDiv.style.display = 'block';
+            document.getElementById('resultsContent').innerHTML = '<p>Analyzing document... <i class="fas fa-spinner fa-spin"></i></p>';
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                // Mock analysis results
+                const conditions = ["Possible vitamin D deficiency (25-OH Vitamin D level: 18 ng/mL)", "Normal CBC results"];
+                const treatments = [
+                    "Supplement with Vitamin D3 2000 IU daily for 3 months",
+                    "Increase sun exposure (15-20 minutes daily)",
+                    "Consider dietary sources: fatty fish, fortified dairy"
+                ];
+                const recommendations = [
+                    "Retest Vitamin D levels after 3 months",
+                    "Consult with a nutritionist for dietary planning"
+                ];
+                
+                // Create result HTML
+                let html = `
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--primary);">Identified Conditions:</h4>
+                        <ul style="margin-left: 1.5rem;">
+                            ${conditions.map(c => `<li>${c}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--primary);">Recommended Treatments:</h4>
+                        <ul style="margin-left: 1.5rem;">
+                            ${treatments.map(t => `<li>${t}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: var(--primary);">Additional Recommendations:</h4>
+                        <ul style="margin-left: 1.5rem;">
+                            ${recommendations.map(r => `<li>${r}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <button class="btn" onclick="saveAnalysisResults()">
+                            <i class="fas fa-save"></i> Save to Medical History
+                        </button>
+                        <button class="btn btn-outline" onclick="findDoctorsForCondition('Vitamin D Deficiency')">
+                            <i class="fas fa-user-md"></i> Find Specialists
+                        </button>
+                    </div>
+                `;
+                
+                document.getElementById('resultsContent').innerHTML = html;
+                
+                // Add to recent files list (simulated)
+                if (!currentUser.medicalHistory) {
+                    currentUser.medicalHistory = [];
+                }
+                
+                currentUser.medicalHistory.unshift({
+                    date: new Date().toLocaleDateString(),
+                    condition: conditions[0],
+                    treatment: treatments[0]
+                });
+                
+                updateLocalStorage();
+            }, 3000);
+        }
+
+        function saveAnalysisResults() {
+            alert('Analysis results saved to your medical history');
+            navigate('dashboard');
+        }
+
+        function findDoctorsForCondition(condition) {
+            // Filter doctors by specialty based on condition
+            let specialty = '';
+            if (condition.includes('Vitamin D')) {
+                specialty = 'Nutritionist';
+            } else if (condition.includes('blood pressure')) {
+                specialty = 'Cardiologist';
+            } else if (condition.includes('neurological')) {
+                specialty = 'Neurologist';
+            }
+            
+            const filteredDoctors = specialty ? 
+                db.doctors.filter(d => d.specialty === specialty) : 
+                db.doctors;
+            
+            if (filteredDoctors.length > 0) {
+                let html = '<h3>Recommended Doctors:</h3><div class="doctor-list">';
+                
+                filteredDoctors.forEach(doctor => {
+                    html += `
+                        <div class="doctor-card">
+                            <div class="doctor-avatar">
+                                ${doctor.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <div class="doctor-info">
+                                <h4>${doctor.name}</h4>
+                                <p class="doctor-specialty">${doctor.specialty}</p>
+                                <p class="doctor-distance">${doctor.location.city} • ${doctor.rating} ★</p>
+                            </div>
+                            <div class="doctor-actions">
+                                <button class="btn" onclick="bookAppointment(${doctor.id})">Book</button>
+                                <button class="btn btn-outline" onclick="viewDoctor(${doctor.id})">Profile</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                document.getElementById('resultsContent').insertAdjacentHTML('beforeend', html);
+            } else {
+                alert('No specialists found for this condition. Try our general practitioners.');
+            }
+        }
+
+        function renderChatbot() {
+            mainContent.innerHTML = `
+                <section class="dashboard">
+                    <div class="container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h2>Health Assistant</h2>
+                            <button class="btn btn-outline" onclick="navigate('dashboard')"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <h3><i class="fas fa-comment-medical"></i> Chat with HealthBot</h3>
+                            <p>Describe your symptoms and our AI assistant will provide guidance and recommend appropriate healthcare providers.</p>
+                            
+                            <div class="chat-container" style="margin-top: 2rem;">
+                                <div class="chat-header">
+                                    <h4>HealthBot Assistant</h4>
+                                </div>
+                                <div class="chat-messages" id="chatMessages">
+                                    <div class="message bot-message">
+                                        Hello! I'm HealthBot. How can I assist you with your health today?
+                                    </div>
+                                </div>
+                                <div class="chat-input">
+                                    <input type="text" id="userQuery" placeholder="Describe your symptoms...">
+                                    <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                            
+                            <div id="doctorRecommendations" style="margin-top: 2rem;"></div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('userQuery');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            const chatDiv = document.getElementById('chatMessages');
+            
+            // Add user message
+            chatDiv.innerHTML += `
+                <div class="message user-message">
+                    ${message}
+                </div>
+            `;
+            
+            // Clear input
+            input.value = '';
+            
+            // Show typing indicator
+            chatDiv.innerHTML += `
+                <div class="message bot-message">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            `;
+            
+            chatDiv.scrollTop = chatDiv.scrollHeight;
+            
+            // Simulate AI response after delay
+            setTimeout(() => {
+                // Remove typing indicator
+                const messages = chatDiv.querySelectorAll('.message');
+                messages[messages.length - 1].remove();
+                
+                // Generate response
+                const response = generateAIResponse(message);
+                
+                // Add bot response
+                chatDiv.innerHTML += `
+                    <div class="message bot-message">
+                        ${response.text}
+                    </div>
+                `;
+                
+                // If response includes doctor recommendations
+                if (response.doctors) {
+                    showDoctorRecommendations(response.doctors);
+                }
+                
+                chatDiv.scrollTop = chatDiv.scrollHeight;
+            }, 1500);
+        }
+
+        function generateAIResponse(message) {
+            const lowerMsg = message.toLowerCase();
+            
+            if (lowerMsg.includes('headache')) {
+                return {
+                    text: "I understand you're experiencing headaches. Headaches can be caused by various factors including stress, dehydration, or underlying conditions. Have you experienced any of the following:\n\n• Blurred vision\n• Nausea/vomiting\n• Fever\n\nWould you like me to recommend some nearby specialists?",
+                    doctors: db.doctors.filter(d => d.specialty === 'Neurologist')
+                };
+            } else if (lowerMsg.includes('stomach') || lowerMsg.includes('abdominal')) {
+                return {
+                    text: "Abdominal pain can have many causes. Based on your description, I recommend:\n\n1. Stay hydrated\n2. Avoid spicy/fatty foods\n3. Monitor for fever or persistent symptoms\n\nIf symptoms continue for more than 48 hours, you should consult a gastroenterologist.",
+                    doctors: db.doctors.filter(d => d.specialty === 'Gastroenterologist')
+                };
+            } else if (lowerMsg.includes('fever')) {
+                return {
+                    text: "For fever management:\n\n• Rest and stay hydrated\n• Take acetaminophen as directed\n• Monitor temperature every 4 hours\n\nIf fever is above 103°F (39.4°C) or lasts more than 3 days, please see a doctor.",
+                    doctors: db.doctors.slice(0, 2) // First 2 doctors as general practitioners
+                };
+            } else {
+                return {
+                    text: "Thank you for sharing your symptoms. For more accurate advice, could you please provide:\n\n1. Duration of symptoms\n2. Severity (mild/moderate/severe)\n3. Any other associated symptoms\n\nOr would you prefer me to recommend general practitioners in your area?",
+                    doctors: db.doctors.slice(0, 2)
+                };
+            }
+        }
+
+        function showDoctorRecommendations(doctors) {
+            const container = document.getElementById('doctorRecommendations');
+            
+            if (!doctors || doctors.length === 0) {
+                container.innerHTML = '<p>No doctor recommendations available for this query.</p>';
+                return;
+            }
+            
+            let html = '<h3>Recommended Healthcare Providers:</h3><div class="doctor-list">';
+            
+            doctors.forEach(doctor => {
+                html += `
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">
+                            ${doctor.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div class="doctor-info">
+                            <h4>${doctor.name}</h4>
+                            <p class="doctor-specialty">${doctor.specialty}</p>
+                            <p class="doctor-distance">${doctor.location.city} • ${doctor.rating} ★</p>
+                        </div>
+                        <div class="doctor-actions">
+                            <button class="btn" onclick="bookAppointment(${doctor.id})">Book</button>
+                            <button class="btn btn-outline" onclick="viewDoctor(${doctor.id})">Profile</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function renderMensesTracker() {
+            mainContent.innerHTML = `
+                <section class="dashboard">
+                    <div class="container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h2>Menstrual Health Tracker</h2>
+                            <button class="btn btn-outline" onclick="navigate('dashboard')"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <h3><i class="fas fa-calendar-alt"></i> Track Your Cycle</h3>
+                            <p>Log details about your menstrual cycle to receive personalized health recommendations.</p>
+                            
+                            <form id="cycleForm" style="margin-top: 2rem;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                    <div class="form-group">
+                                        <label for="lastPeriodDate">Last Period Start Date</label>
+                                        <input type="date" id="lastPeriodDate" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="cycleLength">Cycle Length (days)</label>
+                                        <input type="number" id="cycleLength" min="20" max="45" required>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+                                    <div class="form-group">
+                                        <label for="duration">Duration (days)</label>
+                                        <input type="number" id="duration" min="1" max="10" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="flow">Flow Intensity</label>
+                                        <select id="flow" required>
+                                            <option value="light">Light</option>
+                                            <option value="medium" selected>Medium</option>
+                                            <option value="heavy">Heavy</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="margin-top: 1rem;">
+                                    <label for="mood">Primary Mood</label>
+                                    <select id="mood" required>
+                                        <option value="happy">Happy/Energetic</option>
+                                        <option value="neutral">Neutral</option>
+                                        <option value="irritable">Irritable</option>
+                                        <option value="depressed">Depressed/Anxious</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group" style="margin-top: 1rem;">
+                                    <label>Symptoms (select all that apply)</label>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.5rem; margin-top: 0.5rem;">
+                                        <label style="display: flex; align-items: center;">
+                                            <input type="checkbox" name="symptoms" value="cramps" style="margin-right: 0.5rem;"> Cramps
+                                        </label>
+                                        <label style="display: flex; align-items: center;">
+                                            <input type="checkbox" name="symptoms" value="bloating" style="margin-right: 0.5rem;"> Bloating
+                                        </label>
+                                        <label style="display: flex; align-items: center;">
+                                            <input type="checkbox" name="symptoms" value="headache" style="margin-right: 0.5rem;"> Headache
+                                        </label>
+                                        <label style="display: flex; align-items: center;">
+                                            <input type="checkbox" name="symptoms" value="backache" style="margin-right: 0.5rem;"> Backache
+                                        </label>
+                                        <label style="display: flex; align-items: center;">
+                                            <input type="checkbox" name="symptoms" value="fatigue" style="margin-right: 0.5rem;"> Fatigue
+                                        </label>
+                                        <label style="display: flex; align-items: center;">
+                                            <input type="checkbox" name="symptoms" value="acne" style="margin-right: 0.5rem;"> Acne
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="margin-top: 1.5rem;">
+                                    <label for="notes">Additional Notes</label>
+                                    <textarea id="notes" placeholder="Any other observations about your cycle..."></textarea>
+                                </div>
+                                
+                                <div style="margin-top: 2rem;">
+                                    <button type="button" class="btn" onclick="submitCycleData()" style="width: 100%;">
+                                        <i class="fas fa-save"></i> Save Cycle Data
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="cycleSuggestions" style="margin-top: 2rem; display: none;">
+                                <h3><i class="fas fa-lightbulb"></i> Personalized Recommendations</h3>
+                                <div id="suggestionsContent" style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-card" style="margin-top: 2rem;">
+                            <h3><i class="fas fa-chart-line"></i> Cycle History</h3>
+                            <div id="cycleHistory">
+                                ${currentUser?.menstrualData?.length ? 
+                                    currentUser.menstrualData.map(cycle => `
+                                        <div style="padding: 1rem; border-bottom: 1px solid #eee;">
+                                            <p><strong>${cycle.date}</strong> - ${cycle.cycleLength} day cycle</p>
+                                            <p>Symptoms: ${cycle.symptoms.join(', ')}</p>
+                                        </div>
+                                    `).join('') : 
+                                    '<p>No cycle data recorded yet.</p>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function submitCycleData() {
+            // Get form values
+            const date = document.getElementById('lastPeriodDate').value;
+            const cycleLength = document.getElementById('cycleLength').value;
+            const duration = document.getElementById('duration').value;
+            const flow = document.getElementById('flow').value;
+            const mood = document.getElementById('mood').value;
+            const notes = document.getElementById('notes').value;
+            
+            // Get selected symptoms
+            const symptomCheckboxes = document.querySelectorAll('input[name="symptoms"]:checked');
+            const symptoms = Array.from(symptomCheckboxes).map(cb => cb.value);
+            
+            if (!date || !cycleLength || !duration) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Create cycle record
+            const cycleRecord = {
+                date,
+                cycleLength: parseInt(cycleLength),
+                duration: parseInt(duration),
+                flow,
+                mood,
+                symptoms,
+                notes
+            };
+            
+            // Add to user's data
+            if (!currentUser.menstrualData) {
+                currentUser.menstrualData = [];
+            }
+            
+            currentUser.menstrualData.unshift(cycleRecord);
+            updateLocalStorage();
+            
+            // Generate suggestions
+            generateCycleSuggestions(cycleRecord);
+            
+            // Show suggestions div
+            document.getElementById('cycleSuggestions').style.display = 'block';
+        }
+
+        function generateCycleSuggestions(cycle) {
+            const suggestions = [];
+            
+            // Cycle length suggestions
+            if (cycle.cycleLength < 25) {
+                suggestions.push("Your cycle is shorter than average. Consider tracking basal body temperature to confirm ovulation.");
+            } else if (cycle.cycleLength > 35) {
+                suggestions.push("Your longer cycle may indicate hormonal imbalances. Foods rich in omega-3s may help regulate cycles.");
+            }
+            
+            // Duration suggestions
+            if (cycle.duration > 7) {
+                suggestions.push("For longer periods, ensure adequate iron intake through leafy greens or supplements to prevent anemia.");
+            } else if (cycle.duration < 3) {
+                suggestions.push("Short menstrual flow might benefit from circulation-boosting activities like yoga.");
+            }
+            
+            // Mood suggestions
+            if (cycle.mood === 'irritable' || cycle.mood === 'depressed') {
+                suggestions.push("For mood swings, magnesium-rich foods (nuts, seeds, dark chocolate) and mindfulness exercises may help.");
+            }
+            
+            // Symptom-specific suggestions
+            if (cycle.symptoms.includes('cramps')) {
+                suggestions.push("For cramps: Try heat application, gentle abdominal massage, and anti-inflammatory foods like ginger.");
+            }
+            
+            if (cycle.symptoms.includes('bloating')) {
+                suggestions.push("Reduce bloating by limiting salt intake and drinking peppermint tea.");
+            }
+            
+            if (cycle.symptoms.includes('fatigue')) {
+                suggestions.push("Combat fatigue with iron-rich foods and ensure 7-8 hours of quality sleep.");
+            }
+            
+            // General health tips
+            suggestions.push(
+                "Stay hydrated with 8-10 glasses of water daily.",
+                "Regular moderate exercise can help regulate cycles and reduce symptoms.",
+                "Consider tracking your cycle for 3 months to identify patterns."
+            );
+            
+            // Display suggestions
+            const suggestionsDiv = document.getElementById('suggestionsContent');
+            suggestionsDiv.innerHTML = `
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">Based on your cycle data:</h4>
+                <ul style="margin-left: 1.5rem;">
+                    ${suggestions.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+                
+                <div style="margin-top: 2rem; background: #e9f5f4; padding: 1rem; border-radius: 8px;">
+                    <h4 style="color: var(--primary);">Next Steps</h4>
+                    <p>Your next period is estimated to start around <strong>${calculateNextPeriod(cycle.date, cycle.cycleLength)}</strong>.</p>
+                    <button class="btn" style="margin-top: 1rem;" onclick="remindNextPeriod()">
+                        <i class="fas fa-bell"></i> Set Reminder
+                    </button>
+                </div>
+            `;
+        }
+
+        function calculateNextPeriod(lastDate, cycleLength) {
+            const date = new Date(lastDate);
+            date.setDate(date.getDate() + parseInt(cycleLength));
+            return date.toLocaleDateString();
+        }
+
+        function remindNextPeriod() {
+            alert('Reminder set for your next estimated period start date!');
+        }
+
+        function renderAppointments() {
+            mainContent.innerHTML = `
+                <section class="dashboard">
+                    <div class="container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h2>Your Appointments</h2>
+                            <div>
+                                <button class="btn btn-outline" onclick="navigate('dashboard')"><i class="fas fa-arrow-left"></i> Dashboard</button>
+                                <button class="btn" onclick="showBookAppointmentModal()" style="margin-left: 1rem;">
+                                    <i class="fas fa-plus"></i> New Appointment
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <h3><i class="fas fa-calendar-check"></i> Upcoming Appointments</h3>
+                            
+                            <div id="upcomingAppointments" style="margin-top: 1.5rem;">
+                                ${currentUser?.appointments?.filter(a => new Date(a.date) > new Date()).length > 0 ?
+                                    currentUser.appointments
+                                        .filter(a => new Date(a.date) > new Date())
+                                        .map(a => `
+                                            <div style="padding: 1.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                                                <div>
+                                                    <h4 style="margin-bottom: 0.5rem;">${a.doctorName} (${a.specialty})</h4>
+                                                    <p><i class="far fa-calendar-alt"></i> ${new Date(a.date).toLocaleString()}</p>
+                                                    <p><i class="fas fa-map-marker-alt"></i> ${a.location}</p>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-outline" onclick="cancelAppointment('${a.id}')">
+                                                        <i class="fas fa-times"></i> Cancel
+                                                    </button>
+                                                    <button class="btn" onclick="viewAppointmentDetails('${a.id}')" style="margin-left: 0.5rem;">
+                                                        <i class="fas fa-info-circle"></i> Details
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        `).join('') :
+                                    '<p style="text-align: center; padding: 2rem;">No upcoming appointments found.</p>'
+                                }
+                            </div>
+                        </div>
+                        
+                        <div class="tool-card" style="margin-top: 2rem;">
+                            <h3><i class="fas fa-history"></i> Appointment History</h3>
+                            
+                            <div id="pastAppointments" style="margin-top: 1.5rem;">
+                                ${currentUser?.appointments?.filter(a => new Date(a.date) <= new Date()).length > 0 ?
+                                    currentUser.appointments
+                                        .filter(a => new Date(a.date) <= new Date())
+                                        .map(a => `
+                                            <div style="padding: 1.5rem; border-bottom: 1px solid #eee;">
+                                                <h4 style="margin-bottom: 0.5rem;">${a.doctorName} (${a.specialty})</h4>
+                                                <p><i class="far fa-calendar-alt"></i> ${new Date(a.date).toLocaleString()}</p>
+                                                <p style="margin-top: 0.5rem;">${a.reason || 'No reason specified'}</p>
+                                                <button class="btn btn-outline" onclick="leaveReview('${a.doctorId}')" style="margin-top: 1rem;">
+                                                    <i class="fas fa-star"></i> Leave Review
+                                                </button>
+                                            </div>
+                                        `).join('') :
+                                    '<p style="text-align: center; padding: 2rem;">No past appointments found.</p>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Book Appointment Modal -->
+                <div id="bookAppointmentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+                    <div style="background: white; padding: 2rem; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3>Book New Appointment</h3>
+                            <button onclick="closeModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+                        </div>
+                        
+                        <form id="appointmentForm">
+                            <div class="form-group">
+                                <label for="appointmentDoctor">Select Doctor</label>
+                                <select id="appointmentDoctor" required>
+                                    <option value="">Select a doctor</option>
+                                    ${db.doctors.map(d => `
+                                        <option value="${d.id}">${d.name} - ${d.specialty}</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="appointmentDate">Date & Time</label>
+                                <input type="datetime-local" id="appointmentDate" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="appointmentReason">Reason for Visit</label>
+                                <textarea id="appointmentReason" placeholder="Briefly describe the reason for your appointment..."></textarea>
+                            </div>
+                            
+                            <div style="margin-top: 2rem;">
+                                <button type="button" class="btn" onclick="bookAppointmentSubmit()" style="width: 100%;">
+                                    <i class="fas fa-calendar-plus"></i> Book Appointment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Appointment Details Modal -->
+                <div id="appointmentDetailsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+                    <div style="background: white; padding: 2rem; border-radius: 10px; width: 90%; max-width: 500px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3>Appointment Details</h3>
+                            <button onclick="closeModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+                        </div>
+                        
+                        <div id="appointmentDetailsContent"></div>
+                        
+                        <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
+                            <button class="btn" onclick="closeModal()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showBookAppointmentModal() {
+            document.getElementById('bookAppointmentModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('bookAppointmentModal').style.display = 'none';
+            document.getElementById('appointmentDetailsModal').style.display = 'none';
+        }
+
+        function bookAppointment(doctorId) {
+            showBookAppointmentModal();
+            document.getElementById('appointmentDoctor').value = doctorId;
+        }
+
+        function bookAppointmentSubmit() {
+            const doctorId = document.getElementById('appointmentDoctor').value;
+            const date = document.getElementById('appointmentDate').value;
+            const reason = document.getElementById('appointmentReason').value;
+            
+            if (!doctorId || !date) {
+                alert('Please select a doctor and date');
+                return;
+            }
+            
+            const doctor = db.doctors.find(d => d.id == doctorId);
+            
+            const appointment = {
+                id: generateId(),
+                doctorId: doctor.id,
+                doctorName: doctor.name,
+                specialty: doctor.specialty,
+                location: `${doctor.location.address}, ${doctor.location.city}`,
+                date,
+                reason,
+                status: 'confirmed'
+            };
+            
+            if (!currentUser.appointments) {
+                currentUser.appointments = [];
+            }
+            
+            currentUser.appointments.push(appointment);
+            updateLocalStorage();
+            
+            closeModal();
+            renderAppointments();
+            
+            alert(`Appointment booked with ${doctor.name} for ${new Date(date).toLocaleString()}`);
+        }
+
+        function cancelAppointment(appointmentId) {
+            if (confirm('Are you sure you want to cancel this appointment?')) {
+                currentUser.appointments = currentUser.appointments.filter(a => a.id !== appointmentId);
+                updateLocalStorage();
+                renderAppointments();
+                alert('Appointment cancelled successfully');
+            }
+        }
+
+        function viewAppointmentDetails(appointmentId) {
+            const appointment = currentUser.appointments.find(a => a.id === appointmentId);
+            if (!appointment) return;
+            
+            const doctor = db.doctors.find(d => d.id == appointment.doctorId);
+            
+            document.getElementById('appointmentDetailsContent').innerHTML = `
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--primary);">${appointment.doctorName}</h4>
+                    <p>${appointment.specialty}</p>
+                </div>
+                
+                <div style="margin-bottom: 1rem;">
+                    <p><strong>Date & Time:</strong> ${new Date(appointment.date).toLocaleString()}</p>
+                    <p><strong>Location:</strong> ${appointment.location}</p>
+                    <p><strong>Status:</strong> <span style="color: ${appointment.status === 'confirmed' ? 'green' : 'orange'}">${appointment.status}</span></p>
+                </div>
+                
+                ${appointment.reason ? `<div style="margin-bottom: 1rem;">
+                    <p><strong>Reason:</strong></p>
+                    <p>${appointment.reason}</p>
+                </div>` : ''}
+                
+                <div style="margin-top: 2rem;">
+                    <button class="btn btn-outline" onclick="navigateToDoctor(${appointment.doctorId})">
+                        <i class="fas fa-user-md"></i> View Doctor Profile
+                    </button>
+                    <button class="btn" onclick="startVideoConsultation('${appointment.id}')" style="margin-left: 1rem;">
+                        <i class="fas fa-video"></i> Start Video Call
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('appointmentDetailsModal').style.display = 'flex';
+        }
+
+        function startVideoConsultation(appointmentId) {
+            alert('Video consultation feature would launch here. Connecting to doctor...');
+            closeModal();
+        }
+
+        function navigateToDoctor(doctorId) {
+            // In a full app, this would navigate to doctor profile
+            alert(`Would navigate to doctor ${doctorId} profile page`);
+            closeModal();
+        }
+
+        function leaveReview(doctorId) {
+            navigate('reviews');
+            // In a full app, would pre-fill the doctor selection
+            setTimeout(() => {
+                document.getElementById('reviewDoctor').value = doctorId;
+            }, 100);
+        }
+
+        function renderReviews() {
+            mainContent.innerHTML = `
+                <section class="dashboard">
+                    <div class="container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h2>Doctor Reviews</h2>
+                            <button class="btn btn-outline" onclick="navigate('dashboard')"><i class="fas fa-arrow-left"></i> Dashboard</button>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <h3><i class="fas fa-edit"></i> Write a Review</h3>
+                            <p>Share your experience with a healthcare provider to help others make informed decisions.</p>
+                            
+                            <form id="reviewForm" style="margin-top: 2rem;">
+                                <div class="form-group">
+                                    <label for="reviewDoctor">Select Doctor</label>
+                                    <select id="reviewDoctor" required>
+                                        <option value="">Select a doctor</option>
+                                        ${db.doctors.map(d => `
+                                            <option value="${d.id}">${d.name} - ${d.specialty}</option>
+                                        `).join('')}
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="reviewRating">Rating</label>
+                                    <select id="reviewRating" required>
+                                        <option value="5">5 ★ - Excellent</option>
+                                        <option value="4">4 ★ - Very Good</option>
+                                        <option value="3">3 ★ - Good</option>
+                                        <option value="2">2 ★ - Fair</option>
+                                        <option value="1">1 ★ - Poor</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="reviewComment">Your Review</label>
+                                    <textarea id="reviewComment" placeholder="Share details about your experience..." required></textarea>
+                                </div>
+                                
+                                <div style="margin-top: 2rem;">
+                                    <button type="button" class="btn" onclick="submitReview()" style="width: 100%;">
+                                        <i class="fas fa-paper-plane"></i> Submit Review
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="tool-card" style="margin-top: 2rem;">
+                            <h3><i class="fas fa-star"></i> Recent Reviews</h3>
+                            <p>Read what others are saying about their healthcare experiences.</p>
+                            
+                            <div id="reviewsList" style="margin-top: 1.5rem;">
+                                ${getAllReviews().length > 0 ?
+                                    getAllReviews().map(review => `
+                                        <div class="review-card">
+                                            <div class="review-header">
+                                                <div class="review-user">
+                                                    ${getUserInitials(review.userId)}
+                                                </div>
+                                                <div class="review-info">
+                                                    <h4>${getDoctorName(review.doctorId)}</h4>
+                                                    <div class="review-rating">
+                                                        ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
+                                                    </div>
+                                                    <div class="review-date">
+                                                        ${review.date}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="margin-top: 1rem;">
+                                                <p>${review.comment}</p>
+                                            </div>
+                                        </div>
+                                    `).join('') :
+                                    '<p style="text-align: center; padding: 2rem;">No reviews yet. Be the first to review!</p>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function submitReview() {
+            const doctorId = document.getElementById('reviewDoctor').value;
+            const rating = document.getElementById('reviewRating').value;
+            const comment = document.getElementById('reviewComment').value;
+            
+            if (!doctorId || !rating || !comment) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            const review = {
+                doctorId: parseInt(doctorId),
+                userId: currentUser.id,
+                rating: parseInt(rating),
+                comment,
+                date: new Date().toLocaleDateString()
+            };
+            
+            // Add to doctor's reviews
+            const doctor = db.doctors.find(d => d.id == doctorId);
+            doctor.reviews.push(review);
+            
+            // Update UI
+            document.getElementById('reviewForm').reset();
+            renderReviews();
+            
+            alert('Thank you for your review!');
+        }
+
+        function getAllReviews() {
+            return db.doctors.flatMap(doctor => 
+                doctor.reviews.map(review => ({
+                    ...review,
+                    doctorId: doctor.id
+                }))
+            ).sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+
+        function getDoctorName(doctorId) {
+            const doctor = db.doctors.find(d => d.id == doctorId);
+            return doctor ? doctor.name : 'Unknown Doctor';
+        }
+
+        function getUserInitials(userId) {
+            const user = db.users.find(u => u.id == userId) || { name: 'Anonymous' };
+            return user.name.split(' ').map(n => n[0]).join('');
+        }
+
+        function renderServicesPage() {
+            mainContent.innerHTML = `
+                <section class="features">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Our Services</h2>
+                            <p>Hello Doctors provides comprehensive healthcare solutions through innovative technology</p>
+                        </div>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-file-medical"></i>
+                                </div>
+                                <h3>Medical Document Analysis</h3>
+                                <p>Our AI-powered system analyzes your medical reports, scans, and prescriptions to identify potential health issues and suggest appropriate treatments.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <h3>AI Health Assistant</h3>
+                                <p>Chat with our intelligent assistant to get immediate health guidance, symptom checking, and personalized doctor recommendations.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-female"></i>
+                                </div>
+                                <h3>Menstrual Health Tracking</h3>
+                                <p>Comprehensive cycle tracking with personalized insights and recommendations for better menstrual health management.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <h3>Doctor Appointments</h3>
+                                <p>Book in-person or virtual consultations with healthcare professionals based on your needs and location.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-pills"></i>
+                                </div>
+                                <h3>Medication Management</h3>
+                                <p>Track your medications with reminders and get information about potential interactions.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <h3>Health Monitoring</h3>
+                                <p>Track vital signs and health metrics over time with visualizations and trend analysis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section style="background: var(--light); padding: 4rem 0;">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>How It Works</h2>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                            <div style="text-align: center; padding: 1.5rem;">
+                                <div style="background: var(--primary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-weight: bold;">1</div>
+                                <h3>Create Account</h3>
+                                <p>Sign up for free and set up your health profile</p>
+                            </div>
+                            
+                            <div style="text-align: center; padding: 1.5rem;">
+                                <div style="background: var(--primary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-weight: bold;">2</div>
+                                <h3>Use Health Tools</h3>
+                                <p>Access our smart health tools and services</p>
+                            </div>
+                            
+                            <div style="text-align: center; padding: 1.5rem;">
+                                <div style="background: var(--primary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-weight: bold;">3</div>
+                                <h3>Get Recommendations</h3>
+                                <p>Receive personalized health insights and actions</p>
+                            </div>
+                            
+                            <div style="text-align: center; padding: 1.5rem;">
+                                <div style="background: var(--primary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-weight: bold;">4</div>
+                                <h3>Connect with Doctors</h3>
+                                <p>Book appointments with recommended providers</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderAboutPage() {
+            mainContent.innerHTML = `
+                <section class="features">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>About Hello Doctors</h2>
+                            <p>Revolutionizing healthcare through technology and innovation</p>
+                        </div>
+                        
+                        <div style="max-width: 800px; margin: 0 auto;">
+                            <div style="margin-bottom: 3rem;">
+                                <h3 style="color: var(--secondary); margin-bottom: 1rem;">Our Mission</h3>
+                                <p style="margin-bottom: 1rem;">Hello Doctors was founded with a simple mission: to make healthcare more accessible, understandable, and personalized for everyone.</p>
+                                <p>We believe that by combining medical expertise with cutting-edge technology, we can empower individuals to take control of their health journey.</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 3rem;">
+                                <h3 style="color: var(--secondary); margin-bottom: 1rem;">Our Technology</h3>
+                                <p style="margin-bottom: 1rem;">Our platform utilizes artificial intelligence and machine learning to analyze health data, provide insights, and connect users with appropriate healthcare providers.</p>
+                                <p>All our AI models are developed in collaboration with medical professionals and are continuously updated with the latest medical research.</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 3rem;">
+                                <h3 style="color: var(--secondary); margin-bottom: 1rem;">Privacy & Security</h3>
+                                <p style="margin-bottom: 1rem;">We take your privacy seriously. All health data is encrypted and stored securely in compliance with HIPAA and other healthcare privacy regulations.</p>
+                                <p>You control what information you share and with whom. Our transparent privacy policy ensures you always know how your data is being used.</p>
+                            </div>
+                            
+                            <div>
+                                <h3 style="color: var(--secondary); margin-bottom: 1rem;">The Team</h3>
+                                <p style="margin-bottom: 1.5rem;">Hello Doctors was created by a diverse team of healthcare professionals, software engineers, and data scientists committed to improving healthcare outcomes.</p>
+                                
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                                    <div style="text-align: center;">
+                                        <div style="width: 120px; height: 120px; border-radius: 50%; background: #eee; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary);">JD</div>
+                                        <h4>John Doe</h4>
+                                        <p>Founder & CEO</p>
+                                    </div>
+                                    
+                                    <div style="text-align: center;">
+                                        <div style="width: 120px; height: 120px; border-radius: 50%; background: #eee; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary);">SS</div>
+                                        <h4>Dr. Sarah Smith</h4>
+                                        <p>Chief Medical Officer</p>
+                                    </div>
+                                    
+                                    <div style="text-align: center;">
+                                        <div style="width: 120px; height: 120px; border-radius: 50%; background: #eee; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary);">MJ</div>
+                                        <h4>Mike Johnson</h4>
+                                        <p>CTO</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // Authentication Functions
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const user = db.users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                renderNav(true);
+                navigate('dashboard');
+            } else {
+                alert('Invalid email or password');
+            }
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+            
+            if (password !== confirm) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            if (db.users.some(u => u.email === email)) {
+                alert('Email already registered');
+                return;
+            }
+            
+            const newUser = {
+                id: generateId(),
+                name,
+                email,
+                password,
+                medicalHistory: [],
+                menstrualData: [],
+                appointments: []
+            };
+            
+            db.users.push(newUser);
+            currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            renderNav(true);
+            navigate('dashboard');
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            renderNav(false);
+            navigate('home');
+        }
+
+        // Helper Functions
+        function generateId() {
+            return Math.floor(Math.random() * 1000000);
+        }
+
+        function updateLocalStorage() {
+            if (currentUser) {
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
